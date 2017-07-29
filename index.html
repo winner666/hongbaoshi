@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>红宝石</title>
+		<script>
+			//var http="http://192.168.0.134:8091/";//向一般
+			//var http="http://192.168.0.3:8054/";//艾佳明
+			//var http='http://192.168.0.131:8081/'//盘家兴
+			//var http = 'http://pay.hzsc188.com/futures-xs/' //外网
+			var http='http://116.62.49.14/futures-xs/'
+			//var http='http://192.168.0.169:8073/'//李亚飞
+			//var http=' http://192.168.0.104:8067/'//樱桃
+			//var url = 'http://pay.hzsc188.com/'
+			var url='http://116.62.49.14/'
+			var sessionKey = sessionStorage.getItem('objOne');
+			//var sessionKey='5fb8f6e0c83b4dcb9ba6328ce2f61820';
+			var userName = sessionStorage.getItem('userName');
+			var objAgency = sessionStorage.getItem('objAgency');
+		
+			Date.prototype.format = function(format) {
+				var date = {
+					"M+": this.getMonth() + 1,
+					"d+": this.getDate(),
+					"h+": this.getHours(),
+					"m+": this.getMinutes(),
+					"s+": this.getSeconds(),
+					"q+": Math.floor((this.getMonth() + 3) / 3),
+					"S+": this.getMilliseconds()
+				};
+				if(/(y+)/i.test(format)) {
+					format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+				}
+				for(var k in date) {
+					if(new RegExp("(" + k + ")").test(format)) {
+						format = format.replace(RegExp.$1, RegExp.$1.length == 1 ?
+							date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+					}
+				}
+				return format;
+			}
+
+			var ajax = function(info) {
+				if(window.XMLHttpRequest) {
+					var xhr = new XMLHttpRequest();
+				} else {
+					var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				var url = info.url;
+				var type = info.type || "GET";
+				var data = info.data || "";
+
+				if(type == "GET") {
+					xhr.open("GET", url + "?" + data + "&t=" + new Date().getTime(), true);
+					xhr.send();
+				} else {
+					xhr.open("POST", url, true);
+					xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+					xhr.send(data);
+				}
+
+				xhr.onload = function() {
+					if(info.success) {
+						info.success(xhr.responseText);
+					}
+				}
+			}
+		</script>
+		<script type="text/javascript" src="static/MD5.js"></script>
+
+	</head>
+
+	<body>
+		<div id="app"></div>
+		<!-- built files will be auto injected -->
+
+	</body>
+
+	<style>
+		body {
+			/*background: #f1f1f1;*/
+		}
+		
+		.el-tabs__item .is-active {
+			color: #f00!important;
+		}
+		
+		.width {
+			width: 1130px;
+			margin: 0 auto;
+		}
+	</style>
+
+</html>
